@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>XP Crash Trail - Large Image Centered</title>
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+    background: url('R.I.P Windows 7 2009-2020 (LLPS Version) (1).png') no-repeat center center fixed;
+    background-size: cover;
+    user-select: none;
+    height: 100vh;
+    position: relative;
+  }
+  .trail {
+    position: absolute;
+    pointer-events: none;
+    user-select: none;
+    width: 572px;
+    height: 142px;
+  }
+</style>
+</head>
+<body>
+<script>
+  let isDragging = false;
+  let lastTime = 0;
+
+  document.addEventListener("mousedown", () => (isDragging = true));
+  document.addEventListener("mouseup", () => (isDragging = false));
+  document.addEventListener("mouseleave", () => (isDragging = false));
+
+  document.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+
+    const now = Date.now();
+    if (now - lastTime < 20) return;
+    lastTime = now;
+
+    const trail = document.createElement("img");
+    trail.className = "trail";
+    trail.src = "dfdfdf.png";
+
+    // Center trail image on cursor using half image dimensions
+    trail.style.left = `${e.clientX - 286}px`;
+    trail.style.top = `${e.clientY - 71}px`;
+
+    document.body.appendChild(trail);
+  });
+
+  function clearTrails() {
+    const trails = document.querySelectorAll('.trail');
+    trails.forEach(t => t.remove());
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key.toLowerCase() === 'r') {
+      e.preventDefault(); // comment this line to allow reload normally
+      clearTrails();
+    }
+  });
+</script>
+</body>
+</html>
